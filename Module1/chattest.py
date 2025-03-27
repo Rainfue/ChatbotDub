@@ -1,7 +1,7 @@
 import streamlit as st
 from text2image import KandinskyAPI
 #
-from text2text import Gigachat
+from text2text import GigachatAPI
 #
 from mean_classifier import TextClassifier
 
@@ -13,7 +13,7 @@ from PIL import Image
 import time
 
 classifier = TextClassifier()
-gigachat = Gigachat()
+gigachat = GigachatAPI()
 kandinsky = KandinskyAPI()
 model_id = kandinsky.get_model_id()
 
@@ -76,14 +76,14 @@ if prompt := st.chat_input("Ваш вопрос..."):
         if generation_check:
             try:
                 # Конвертируем в base64 и сохраняем
-                image_data = base64.b64decode(generation_check)
-                image = Image.open(BytesIO(image_data))
-                image_base64 = pil_to_base64(image)
+                # image_data = base64.b64decode(generation_check)
+                # image = Image.open(BytesIO(image_data))
+                # image_base64 = pil_to_base64(image)
                 
                 # Сохраняем изображение в историю
                 st.session_state.messages.append({
                     "role": "assistant",
-                    "content": image_base64,
+                    "content": generation_check,
                     "type": "image"
                 })
                 

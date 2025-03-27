@@ -8,6 +8,12 @@ import json
 from config import API_KEY, API_SECRET, API_URL
 # для работы со временем
 import time
+# для работы с форматом base64
+import base64
+# для работы с байтовой информацией
+from io import BytesIO
+# для работы с изображениями
+from PIL import Image
 
 # --------------------------------------------------
 # реализация класса
@@ -81,7 +87,9 @@ class KandinskyAPI:
             data = response.json()
             # если изображение готово
             if data['status'] == 'DONE':
-                # возвращаем
+                # получаем информацию а фото
+                img_data = base64.b64decode(data['images'][0])
+                # возвращаем изображение
                 return data['images'][0]
             # если нет, тратим попытку
             attempts -= 1

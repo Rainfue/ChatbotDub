@@ -1,16 +1,13 @@
 # --------------------------------------------------
 # импортирование библиотек
-# модуль для запросов
-import requests
 # API Gigachat
 from gigachat import GigaChat
 # импортируем API ключи
 from config import GIGA_AUTH_KEY, CA_FILE_PATH
 
 
-
 # Создаем класс объекта gigachat модели
-class Gigachat:
+class GigachatAPI:
     # Конструктор класса
     def __init__(self,
                 token: str = GIGA_AUTH_KEY,

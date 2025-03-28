@@ -29,6 +29,22 @@ class KandinskyAPI:
             'X-Secret': F'Secret {API_SECRET}',
         }
         
+    # метод для проверки доступности API
+    def is_available(self) -> bool:
+        '''Проверяет, доступна ли API'''
+        # пробуем получить ответ
+        try:
+            # отправляем запрос
+            response = requests.get(self.URL + 'key/api/v1/models', 
+                                    headers=self.AUTH_HEADERS,
+                                    timeout=5)
+            # возвращаем True
+            return response.status_code == 200
+        # если не получилось
+        except:
+            # возвращаем False
+            return False
+
     # метод для получения ID модели
     def get_model_id(self):
         # получаем информацию про модель
@@ -87,9 +103,7 @@ class KandinskyAPI:
             data = response.json()
             # если изображение готово
             if data['status'] == 'DONE':
-                # получаем информацию а фото
-                img_data = base64.b64decode(data['images'][0])
-                # возвращаем изображение
+                # возвращаем изображение в формате base64
                 return data['images'][0]
             # если нет, тратим попытку
             attempts -= 1

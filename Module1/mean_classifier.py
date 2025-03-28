@@ -18,7 +18,7 @@ class TextClassifier():
         # токенизатор
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         # метки
-        self.labels = ['image', 'text']
+        self.labels = ['image generation', 'text']
         
     # модуль для классификации текста
     def classify(self,
@@ -39,7 +39,11 @@ class TextClassifier():
         
         # Нормализуем для двух меток
         probs = torch.softmax(logits, dim=0)
-
+        # получаем индекс метки
         pred_idx = torch.argmax(probs).item()
-
+        # логирование
+        print(f'probs: {probs}')
+        print(f'label: {self.labels[pred_idx]}')
+        print('===============================')
+        # возвращаем метку
         return self.labels[pred_idx]
